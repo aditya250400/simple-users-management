@@ -15,6 +15,12 @@ router.post("/register", validateRegister, registerController.register);
 router.post("/login", validateLogin, loginController.login);
 router.get("/admin/users", verifyToken, UserController.findUsers);
 router.get("/admin/users/:id", verifyToken, UserController.findUserById);
+router.put(
+  "/admin/users/:id",
+  verifyToken,
+  validateUser,
+  UserController.updateUser
+);
 router.post(
   "/admin/users",
   verifyToken,
