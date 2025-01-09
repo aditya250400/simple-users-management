@@ -14,6 +14,7 @@ const { validateUser } = require("../utils/validators/user");
 router.post("/register", validateRegister, registerController.register);
 router.post("/login", validateLogin, loginController.login);
 router.get("/admin/users", verifyToken, UserController.findUsers);
+router.get("/admin/users/:id", verifyToken, UserController.findUserById);
 router.post(
   "/admin/users",
   verifyToken,
