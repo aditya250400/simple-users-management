@@ -27,5 +27,6 @@ router.post(
   validateUser,
   UserController.createUser
 );
+router.delete("/admin/users/:id", verifyToken, UserController.deleteUser);
 
 module.exports = router;
