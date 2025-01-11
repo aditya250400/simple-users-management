@@ -1,6 +1,23 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import Cookies from "js-cookie";
 
 export default function SidebarMenu() {
+  const navigate = useNavigate();
+  const { setIsAuthenticated } = useContext(AuthContext);
+
+  const logout = () => {
+    Cookies.remove("token");
+    Cookies.remove("user");
+
+    setIsAuthenticated(false);
+
+    navigate("/login", {
+      replace: true,
+    });
+  };
+
   return (
     <div className=" bg-white h-fit rounded-lg flex flex-col gap-3 ">
       <h1 className="p-2 w-full bg-slate-600 rounded-t-lg text-white">Menu</h1>
@@ -15,6 +32,7 @@ export default function SidebarMenu() {
         <hr />
         <button
           to="/admin/users"
+          onClick={logout}
           className="self-start hover:bg-slate-300 w-full text-start"
         >
           Logout
