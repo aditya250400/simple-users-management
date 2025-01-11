@@ -1,21 +1,13 @@
-//import useContext
 import { useContext } from "react";
-
-//import context
 import { AuthContext } from "../context/AuthContext";
-
-//import react router dom
 import { Routes, Route, Navigate } from "react-router-dom";
-
-//import view home
 import Home from "../views/home/index.jsx";
-
-//import view register
 import Register from "../views/auth/register.jsx";
-
-//import view login
 import Login from "../views/auth/login.jsx";
 import Dashboard from "../views/admin/dashboard/index.jsx";
+import UsersIndex from "../views/admin/users/index.jsx";
+import UsersEdit from "../views/admin/users/edit.jsx";
+import UsersCreate from "../views/admin/users/create.jsx";
 
 export default function AppRoutes() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -47,6 +39,27 @@ export default function AppRoutes() {
         path="/admin/dashboard"
         element={
           isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />
+        }
+      />
+
+      <Route
+        path="/admin/users"
+        element={
+          isAuthenticated ? <UsersIndex /> : <Navigate to="/login" replace />
+        }
+      />
+
+      <Route
+        path="/admin/users/create"
+        element={
+          isAuthenticated ? <UsersCreate /> : <Navigate to="/login" replace />
+        }
+      />
+
+      <Route
+        path="/admin/users/edit/:id"
+        element={
+          isAuthenticated ? <UsersEdit /> : <Navigate to="/login" replace />
         }
       />
     </Routes>
