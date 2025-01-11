@@ -7,7 +7,7 @@ import api from "../../../services/api";
 
 export default function UsersIndex() {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingId, setLoadingId] = useState(null);
 
   const fetchDataUsers = async () => {
     const token = Cookies.get("token");
@@ -20,8 +20,24 @@ export default function UsersIndex() {
       setUsers(response.data.data);
     } catch (error) {
       console.error("There was an error fetching the users!", error);
+    }
+  };
+
+  const deleteUser = async (id) => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      api.defaults.headers.common["Authorization"] = token;
+    }
+
+    try {
+      setLoadingId(id);
+      await api.delete(`/admin/users/${id}`);
+      fetchDataUsers();
+    } catch (error) {
+      console.error("There was an error deleting the user!", error);
     } finally {
-      setLoading(false);
+      setLoadingId(null);
     }
   };
 
@@ -29,7 +45,6 @@ export default function UsersIndex() {
     fetchDataUsers();
 
     return () => {
-      setLoading(false);
       setUsers([]);
     };
   }, []);
@@ -42,14 +57,14 @@ export default function UsersIndex() {
           <div className="p-2">
             <Link
               to="/admin/users/create"
-              className=" rounded-lg bg-slate-300 px-2 text-black text-sm"
+              className="rounded-lg bg-slate-300 px-2 text-black text-sm"
             >
               Add User
             </Link>
           </div>
         </div>
         <hr />
-        <div className="overflow-x-auto bg-white ">
+        <div className="overflow-x-auto bg-white">
           <table className="table text-center">
             {/* head */}
             <thead>
@@ -61,20 +76,28 @@ export default function UsersIndex() {
             </thead>
             <tbody>
               {users.length > 0 ? (
-                users.map((user, i) => (
-                  <tr key={i}>
+                users.map((user) => (
+                  <tr key={user.id}>
                     <td>{user?.name}</td>
                     <td>{user?.email}</td>
                     <td>
-                      <div className="flex items-center justify-center gap-2  ">
+                      <div className="flex items-center justify-center gap-2">
                         <Link
                           to={`/admin/users/edit/${user.id}`}
                           className="text-center bg-blue-700 text-white p-2 rounded-lg"
                         >
                           Edit
                         </Link>
-                        <button className="text-center bg-red-700 text-white p-2 rounded-lg">
-                          Delete
+                        <button
+                          onClick={() => deleteUser(user.id)}
+                          className={`text-center bg-red-700 text-white p-2 rounded-lg ${
+                            loadingId === user.id
+                              ? "hover:cursor-not-allowed opacity-50"
+                              : ""
+                          }`}
+                          disabled={loadingId === user.id}
+                        >
+                          {loadingId === user.id ? "Deleting..." : "Delete"}
                         </button>
                       </div>
                     </td>

@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../../../services/api";
 
-const token = Cookies.get("token");
-
 export default function UsersCreate() {
   const navigate = useNavigate();
 
@@ -18,6 +16,8 @@ export default function UsersCreate() {
   const [loading, setLoading] = useState(false);
 
   const storeUser = async (e) => {
+    const token = Cookies.get("token");
+
     e.preventDefault();
     api.defaults.headers.common["Authorization"] = token;
 
