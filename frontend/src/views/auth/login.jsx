@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import Cookies from "js-cookie";
 import { AuthContext } from "../../context/AuthContext";
@@ -82,9 +82,16 @@ export default function Login() {
             loading ? "hover:cursor-not-allowed opacity-50" : ""
           }`}
         >
-          {loading ? "Loading..." : " Register"}
+          {loading ? "Loading..." : " Login"}
         </button>
       </form>
+
+      <div className="my-3 flex items-center gap-2">
+        <p className="text-base">Not have an account? </p>
+        <Link className="text-blue-600 text-sm" to={"/register"}>
+          Register...
+        </Link>
+      </div>
     </div>
   );
 }
