@@ -68,7 +68,7 @@ export default function UsersIndex() {
                     <td>
                       <div className="flex items-center justify-center gap-2  ">
                         <Link
-                          to={`/admin/users/${users.id}`}
+                          to={`/admin/users/edit/${user.id}`}
                           className="text-center bg-blue-700 text-white p-2 rounded-lg"
                         >
                           Edit
