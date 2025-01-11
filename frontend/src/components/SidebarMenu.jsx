@@ -26,7 +26,7 @@ export default function SidebarMenu() {
     <div className=" bg-white h-fit rounded-lg flex flex-col gap-3 ">
       <h1 className="p-2 w-full bg-slate-600 rounded-t-lg text-white">Menu</h1>
 
-      <di className="m-2 p-2 flex flex-col gap-2 border">
+      <div className="m-2 p-2 flex flex-col gap-2 border">
         <Link
           to="/admin/dashboard"
           className={`hover:bg-slate-300  ${dashboard}`}
@@ -44,7 +44,7 @@ export default function SidebarMenu() {
         >
           Logout
         </button>
-      </di>
+      </div>
     </div>
   );
 }
