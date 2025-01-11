@@ -1,5 +1,5 @@
 //import useContext
-import React, { useContext } from "react";
+import { useContext } from "react";
 
 //import context
 import { AuthContext } from "../context/AuthContext";
@@ -15,6 +15,7 @@ import Register from "../views/auth/register.jsx";
 
 //import view login
 import Login from "../views/auth/login.jsx";
+import Dashboard from "../views/admin/dashboard/index.jsx";
 
 export default function AppRoutes() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -40,6 +41,12 @@ export default function AppRoutes() {
           ) : (
             <Login />
           )
+        }
+      />
+      <Route
+        path="/admin/dashboard"
+        element={
+          isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />
         }
       />
     </Routes>
